@@ -18,15 +18,15 @@ public interface ServerEndPointInterface {
 
     @Headers({
             "Accept: application/vnd.github.v3+json",
-            "User-Agent: Githubrepos"
+            "User-Agent: cqbus405/android-project"
     })
     @GET("/search/repositories")
-    Call<RepoList> getRepoList(@Query("q") String q, @Query("sort") String sort, @Query("page") int page, @Query("per_page") int perPage);
+    Call<RepoList> getRepoList(@Query("q") String q, @Query("sort") String sort, @Query("page") int page, @Query("per_page") int perPage, @Query("client_id") String id, @Query("client_secret") String secret);
 
     @Headers({
             "Accept: application/vnd.github.v3+json",
-            "User-Agent: Githubrepos"
+            "User-Agent: cqbus405/android-project"
     })
     @GET("/repos/{owner}/{repo}/contributors")
-    Call<ArrayList<Owner>> getContributors(@Path("owner") String owner, @Path("repo") String repo, @Query("page") int page, @Query("per_page") int perPage);
+    Call<ArrayList<Owner>> getContributors(@Path("owner") String owner, @Path("repo") String repo, @Query("page") int page, @Query("per_page") int perPage, @Query("client_id") String id, @Query("client_secret") String secret);
 }

@@ -3,6 +3,7 @@ package com.qc.githubrepos.data.repo;
 import com.qc.githubrepos.data.RepoList;
 import com.qc.githubrepos.retrofit.ApiClient;
 import com.qc.githubrepos.retrofit.ServerEndPointInterface;
+import com.qc.githubrepos.util.Constants;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -30,7 +31,7 @@ public class RepoRemoteDataSource implements RepoDataSource {
     public void getRepoList(int page, final GetRepoListCallback callback) {
         ServerEndPointInterface serverEndPointInterface = ApiClient.getClient().create(ServerEndPointInterface.class);
 
-        Call<RepoList> call = serverEndPointInterface.getRepoList("created:\"2016-05-23 .. 2016-05-29\"", "stars", page, 10);
+        Call<RepoList> call = serverEndPointInterface.getRepoList("created:\"2016-05-23 .. 2016-05-29\"", "stars", page, 10, Constants.CLIENT_ID, Constants.CLINET_SECRET);
         call.enqueue(new Callback<RepoList>() {
             @Override
             public void onResponse(Call<RepoList> call, Response<RepoList> response) {

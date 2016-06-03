@@ -3,6 +3,7 @@ package com.qc.githubrepos.data.contributor;
 import com.qc.githubrepos.data.Owner;
 import com.qc.githubrepos.retrofit.ApiClient;
 import com.qc.githubrepos.retrofit.ServerEndPointInterface;
+import com.qc.githubrepos.util.Constants;
 
 import java.util.ArrayList;
 
@@ -32,7 +33,7 @@ public class ContributorRemoteDataSource implements ContributorDataSource {
     public void getContributors(int page, String repo, String owner, final GetContributorsCallback callback) {
         ServerEndPointInterface serverEndPointInterface = ApiClient.getClient().create(ServerEndPointInterface.class);
 
-        Call<ArrayList<Owner>> call = serverEndPointInterface.getContributors(owner, repo, page, 10);
+        Call<ArrayList<Owner>> call = serverEndPointInterface.getContributors(owner, repo, page, 10, Constants.CLIENT_ID, Constants.CLINET_SECRET);
         call.enqueue(new Callback<ArrayList<Owner>>() {
             @Override
             public void onResponse(Call<ArrayList<Owner>> call, Response<ArrayList<Owner>> response) {
