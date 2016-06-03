@@ -16,5 +16,7 @@ api
 3rd party library
 
 Retrofit
+
 Picasso
+
 Google Gson
