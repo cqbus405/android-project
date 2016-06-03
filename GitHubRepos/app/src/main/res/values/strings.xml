@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">GitHubRepos</string>
+    <string name="repolist_title">Popular Repositories</string>
+    <string name="contributor_title">Contributors</string>
+</resources>
