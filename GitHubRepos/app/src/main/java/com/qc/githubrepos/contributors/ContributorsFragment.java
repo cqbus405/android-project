@@ -36,8 +36,6 @@ public class ContributorsFragment extends Fragment implements ContributorsContra
 
     private int mLastVisibleItem;
 
-    private LinearLayoutManager mLayoutManager;
-
     private String owner;
 
     private String repo;
@@ -63,10 +61,10 @@ public class ContributorsFragment extends Fragment implements ContributorsContra
         page = 1;
         mIsScrolling = false;
 
-        mLayoutManager = new LinearLayoutManager(getActivity());
-
         mPresenter.getContributors(1, owner, repo, true);
         mAdapter = new ContributorAdapter(getContext());
+
+        setRetainInstance(true);
     }
 
     @Nullable
@@ -83,6 +81,8 @@ public class ContributorsFragment extends Fragment implements ContributorsContra
                 page = 1;
             }
         });
+
+        final LinearLayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
 
         mRecyclerView = (RecyclerView) view.findViewById(R.id.repolist_recyclerview);
         mRecyclerView.setHasFixedSize(false);
@@ -104,11 +104,18 @@ public class ContributorsFragment extends Fragment implements ContributorsContra
 
                 mIsScrolling = false;
                 mLastVisibleItem = mLayoutManager.findLastVisibleItemPosition();
+                mAdapter.setFooterVisible(mIsScrolling);
             }
         });
         mRecyclerView.setAdapter(mAdapter);
 
         return view;
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        clean();
     }
 
     @Override
@@ -141,5 +148,11 @@ public class ContributorsFragment extends Fragment implements ContributorsContra
     @Override
     public void showMessage(String msg) {
         ActivityUtils.showToast(msg, getActivity().getApplicationContext());
+    }
+
+    private void clean() {
+        mRecyclerView.setAdapter(null);
+        mSwipeRefreshLayout = null;
+        mRecyclerView = null;
     }
 }

@@ -39,8 +39,6 @@ public class RepoListFragment extends Fragment implements RepoListContract.View 
 
     private int mLastVisibleItem;
 
-    private LinearLayoutManager mLayoutManager;
-
     public static RepoListFragment newInstance() {
         
         Bundle args = new Bundle();
@@ -57,8 +55,6 @@ public class RepoListFragment extends Fragment implements RepoListContract.View 
         page = 1;
         mIsScrolling = false;
 
-        mLayoutManager = new LinearLayoutManager(getActivity());
-
         mRepoListPresenter.getRepoList(1, true);
         mAdapter = new RepoListAdapter(getContext());
         mAdapter.setOnItemClickListener(new RepoListAdapter.OnItemClickListener() {
@@ -67,6 +63,8 @@ public class RepoListFragment extends Fragment implements RepoListContract.View 
                 mRepoListPresenter.startContributors(repo.getName(), repo.getOwner().getLogin());
             }
         });
+
+        setRetainInstance(true);
     }
 
     @Nullable
@@ -84,6 +82,8 @@ public class RepoListFragment extends Fragment implements RepoListContract.View 
                 page = 1;
             }
         });
+
+        final LinearLayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
 
         // set RecyclerView
         mRecyclerView = (RecyclerView) view.findViewById(R.id.repolist_recyclerview);
@@ -107,6 +107,7 @@ public class RepoListFragment extends Fragment implements RepoListContract.View 
 
                 mIsScrolling = false;
                 mLastVisibleItem = mLayoutManager.findLastVisibleItemPosition();
+                mAdapter.setFooterVisible(mIsScrolling);
             }
         });
         mRecyclerView.setAdapter(mAdapter);
